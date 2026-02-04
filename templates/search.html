@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/img/favicon.ico"/>
+	<!--<link rel="stylesheet" href="http://neo4j-contrib.github.io/developer-resources/language-guides/assets/css/main.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <title>WikiLink - Search in the Wikipedia</title>
+</head>
+
+<body>
+<div id="graph">
+</div>
+<div role="navigation" class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="row">
+			<div class="navbar-header col-sm-6 col-md-6">
+                <div class="logo-well">
+                    <a href="./"><img src="/img/favicon.ico" alt="WikiLink - Graphing the Wikipedia" id="logo"></a>
+                </div>
+                <div class="navbar-brand">
+                    <div class="brand">WikiLink &nbsp;&#x21cc;&nbsp; Search in the Wikipedia</div>
+                </div>
+            </div>		
+            
+			<div class="col-sm-6 col-md-6">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <form role="search" class="navbar-form" id="search">
+                            <div class="form-group">
+                                <input type="text" value="" placeholder="Search for something!" class="form-control" id="btn-search" name="search">
+                            </div>
+							<div class="form-group">
+								<input type="Number" value="10" placeholder="Rows" class="form-control" name="rowlimit" id="rowlimit" maxlength= "3";>
+							</div>
+                            <button class="btn btn-default" type="submit">Search</button>
+							<font size=2>&nbsp;&nbsp;(Rows min 1, max 500)</font>
+                        </form>
+						
+                    </li>
+                </ul>
+            </div>	
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="search-results">Search Results
+				<!--<span style="float:right;"><input type="button" data-name="show" value="Hide" id="toggle" onclick="javascript:toggleDiv('results');"></span>-->
+			</div>
+            <table id="results" class="table table-striped table-hover">
+                <thead>
+                <tr>
+					<th>Title</th>
+                    <th style="text-align:center">Type</th>
+                    <th style="text-align:center">Sub-Categories Count</th>
+                    <th style="text-align:center">Pages Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="panel panel-default" id="panel-default">
+            <div class="panel-heading" id="title">
+				Details
+				<span style="float:right;"><img src="/img/page-icon.png" class="list-type" alt="Page">  Page  <img src="/img/categories-icon.png" class="list-type" alt="Category">Category</span>
+			</div>
+			<span id="wikilinks" style="float:right;">     Click on "Title" at left or "Details" here to go to each Wikipedia page!&nbsp;&nbsp;</span>
+			<div class="row">
+                <div class="col-sm-4 col-md-4">
+                    <img src="" class="well" id="poster"/>
+                </div>
+               <div class="col-md-8 col-sm-8">
+                    <h4 id="details-header"></h4>
+                    <ul id="wikidetails_list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'menu.html' %}
+
+<style type="text/css">
+    .node { stroke: #222; stroke-width: 1.5px; }
+    .node.category { fill: #888; }
+    .node.wiki { fill: #BBB; }
+    .link { stroke: #999; stroke-opacity: .6; stroke-width: 1px; }
+</style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="/js/wikilink-search.js"></script>
+<script type="text/javascript" src="/js/wikilink-bg.js"></script>
+</body>
+</html>

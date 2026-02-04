@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/img/favicon.ico"/>
+	<!--<link rel="stylesheet" href="http://neo4j-contrib.github.io/developer-resources/language-guides/assets/css/main.css">-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <title>WikiLink - Contact WikiLink</title>
+</head>
+
+<body>
+<div id="graph">
+</div>
+<div role="navigation" class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="row">
+			<div class="navbar-header col-sm-12 col-md-12">
+                <div class="logo-well">
+                    <a href="./"><img src="/img/favicon.ico" alt="WikiLink - Graphing the Wikipedia" id="logo"></a>
+                </div>
+                <div class="navbar-brand">
+                    <div class="brand">WikiLink &nbsp;&#x21cc;&nbsp; Contact WikiLink</div>
+                </div>
+            </div>		
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default" id="panel-default">
+            <div class="panel-heading" id="title">
+				Welcome to WikiLink !
+			</div>
+			<div class="row">
+               <div class="col-md-8 col-sm-8">
+					<h4 id="details-message"><b>Contact message failed. Please, try again. Thank you<p>&nbsp;</p></b></h4>
+					
+                    <h4 id="details-header">WikiLink Contact Form:</h4>
+
+					<form action="/contact" method="post" id="contact">
+						<div class="form-group">
+							<input type="text" value="" placeholder="Name" class="form-control" id="btn-name" name="name" required>
+						</div>
+						<div class="form-group">
+							<input type="email" value="" placeholder="Email" class="form-control" id="btn-email" name="email" required>
+						</div>						
+						<div class="form-group">
+							<input type="textarea" value="" placeholder="Message" class="form-control" id="btn-message" name="message" style="height: 10em;width:100%;" required>						
+						</div>	
+						<button class="btn btn-default" type="submit">Contact</button>
+					</form>					  
+
+                </div>
+				<div class="col-md-4 col-sm-4"><img src="/img/connections-between-things.jpg" 
+								alt="Welcome to WikiLink" 
+								title="Welcome to WikiLink" id="img-wikilink" width="100%"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'menu.html' %}
+
+<style type="text/css">
+    .node { stroke: #222; stroke-width: 1.5px; }
+    .node.category { fill: #888; }
+    .node.wiki { fill: #BBB; }
+    .link { stroke: #999; stroke-opacity: .6; stroke-width: 1px; }
+</style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="/js/wikilink.js"></script>
+<script type="text/javascript" src="/js/wikilink-bg.js"></script>
+</body>
+</html>
