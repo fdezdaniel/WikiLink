@@ -8,6 +8,7 @@
 * Neo4j-Server
 * Frontend: jquery, bootstrap, http://d3js.org/[d3.js], pototo.js
 
+Note: GitHub repo was published in 2017. I updated a clean snapshot by 2026, though is the same code.
 
 === Setup
 
