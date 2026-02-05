@@ -1,14 +1,14 @@
 = WikiLink Application - Neo4j & Wikipedia graph visualization
 
-WikiLink is a web application for interactive graph exploration of Wikipedia categories and pages, using Neo4j as the database and Flask + d3.js/Popoto.js on the frontend.
+WikiLink is a web application for interactive graph exploration of Wikipedia categories and pages, using Neo4j as the database and Flask + d3.js/Popoto.js on the frontend. This project was built as a personal exploration of knowledge graphs and visual interfaces for navigating Wikipedia’s category system.
 
-NOTE: GitHub repo was originally published in 2017. In 2026 I uploaded a clean v1.0 snapshot of the same code.
+Originally built in 2017 and republished in 2026 as a clean v1.0 snapshot of the same code.
 
 == Quick start
 
 . Create and activate a virtualenv (optional but recommended).
 . Install Python dependencies with `pip install -r requirements.txt` (and `flask-autodoc` if needed).
-. Install Neo4j locally, including the APOC plugin, and make sure it runs on `localhost:7474`.
+. Install Neo4j locally with the APOC plugin and make sure it runs on `localhost:7474`.
 . Configure Neo4j credentials in the PowerShell scripts and in `wikilink.py` / `wikilink-popoto.search.js`.
 . Load the dataset using the `wikilink_create_categories.bat` and `wikilink_process_data*.bat` scripts.
 . Start the Flask app with `python wikilink.py` and open `http://localhost:8080`.
@@ -20,8 +20,6 @@ NOTE: GitHub repo was originally published in 2017. In 2026 I uploaded a clean v
 * http://flask.pocoo.org/[Flask] - Python microframework based on Werkzeug, Jinja2 and good intentions
 * Neo4j-Server
 * Frontend: jQuery, Bootstrap, http://d3js.org/[d3.js], Popoto.js
-
-Note: GitHub repo was published in 2017. I updated a clean snapshot by 2026, though it is the same code.
 
 == Setup
 
@@ -63,7 +61,7 @@ You will need to edit `wikilink/neo4j/wikilink_create_categories.ps1` and `wikil
 
 Then install the dataset running `wikilink/neo4j/wikilink_create_categories.bat`. You can edit it to add commented categories creation with `//`. Then prepare all the data running `wikilink/neo4j/wikilink_process_data.bat` to load a single category in 1–5 minutes or `wikilink/neo4j/wikilink_process_data_all.bat` to process all the dataset.
 
-For last, let’s check Python authentication with Neo4j and the contact form:
+Finally, configure Python authentication with Neo4j and the contact form:
 
 On the Neo4jRestClient folder in your Python installation, open the client config `.py` file and set up user & password. On `wikilink/wikilink.py` replace the placeholders with your Neo4j DB authentication.
 
@@ -100,3 +98,12 @@ And finally let’s start up a Flask web server. You can do it by clicking direc
 ----
 
 Navigate to http://localhost:8080 and you should see your WikiLink application.
+
+== Future ideas
+
+Even though this project is considered feature-complete and I don’t plan to actively maintain it, there are some ideas that could be explored in the future:
+
+- Replace `neo4jrestclient` with the official Neo4j Python driver.
+- Add Docker Compose setup for Neo4j + Flask to simplify local setup.
+- Explore migrating the frontend to a modern JS framework while keeping Popoto.js for graph exploration.
+
