@@ -1,23 +1,33 @@
-== WikiLink Application - Neo4j & Wikipedia graph visualization
+= WikiLink Application - Neo4j & Wikipedia graph visualization
 
-=== Stack
+WikiLink is a web application for interactive graph exploration of Wikipedia categories and pages, using Neo4j as the database and Flask + d3.js/Popoto.js on the frontend.
+
+NOTE: GitHub repo was originally published in 2017. In 2026 I uploaded a clean v1.0 snapshot of the same code.
+
+== Quick start
+
+. Create and activate a virtualenv (optional but recommended).
+. Install Python dependencies with `pip install -r requirements.txt` (and `flask-autodoc` if needed).
+. Install Neo4j locally, including the APOC plugin, and make sure it runs on `localhost:7474`.
+. Configure Neo4j credentials in the PowerShell scripts and in `wikilink.py` / `wikilink-popoto.search.js`.
+. Load the dataset using the `wikilink_create_categories.bat` and `wikilink_process_data*.bat` scripts.
+. Start the Flask app with `python wikilink.py` and open `http://localhost:8080`.
+
+== Stack
 
 * https://github.com/neo4j-examples/movies-python-bolt - Example app used as base
 * https://github.com/versae/neo4j-rest-client[neo4jrestclient] - Neo4j Python driver
-* http://flask.pocoo.org/[Flask] - Python microframework based on Werkzeug, Jinja 2 and good intentions.
+* http://flask.pocoo.org/[Flask] - Python microframework based on Werkzeug, Jinja2 and good intentions
 * Neo4j-Server
-* Frontend: jquery, bootstrap, http://d3js.org/[d3.js], pototo.js
+* Frontend: jQuery, Bootstrap, http://d3js.org/[d3.js], Popoto.js
 
-Note: GitHub repo was published in 2017. I updated a clean snapshot by 2026, though is the same code.
+Note: GitHub repo was published in 2017. I updated a clean snapshot by 2026, though it is the same code.
 
-=== Setup
+== Setup
 
-First get yourself setup with link:http://docs.python-guide.org/en/latest/dev/virtualenvs/[virtualenv] so we don't break any other Python stuff you have on your machine. 
-You can go to next step - install dependencies for the app - if you want to bypass to create a virtualenv.
-We use Python 3+ version.
-After you've got that installed let's setup an environment for our app:
+First get yourself set up with http://docs.python-guide.org/en/latest/dev/virtualenvs/[virtualenv] so we don’t break any other Python stuff you have on your machine. You can go to the next step (install dependencies for the app) if you want to bypass creating a virtualenv. We use Python 3+. After you’ve got that installed, let’s set up an environment for our app:
 
-[source]
+[source,bash]
 ----
 $ virtualenv wikilink
 $ source wikilink/bin/activate
@@ -25,60 +35,54 @@ $ source wikilink/bin/activate
 
 The next step is to install the dependencies for the app:
 
-[source]
+[source,bash]
 ----
 (wikilink)$ pip install -r requirements.txt
-
-Maybe is also needed this.
+# Maybe this is also needed:
 (wikilink)$ pip install flask-autodoc
-
 ----
 
-=== Run locally
+== Run locally
 
-Ensure you have Neo4j DB as localhost installed.
-If it is not already installed, get OpenJDK 8 or Oracle Java 8, recommended for Neo4j 3.0.x. Version 7 is recommended for releases prior to 2.3.0.
+Ensure you have Neo4j DB installed as localhost. If it is not already installed, get OpenJDK 8 or Oracle Java 8, recommended for Neo4j 3.0.x. Version 7 is recommended for releases prior to 2.3.0.
 
-Start your local Neo4j Server (http://neo4j.com/download[Download & Install]), open the http://localhost:7474[Neo4j Browser]. 
+Start your local Neo4j Server (http://neo4j.com/download[Download & Install]), and open the http://localhost:7474/[Neo4j Browser].
 
-Ensure you have the apoc plugin installed. For it, if you use Neo4j Desktop go to > Manage > Plugins > APOC > Install and restart your DB. 
-Otherwise, download the .jar package from Neo4j web and place it on /neo4j/plugins folder.
+Ensure you have the APOC plugin installed. If you use Neo4j Desktop go to `Manage > Plugins > APOC > Install` and restart your DB. Otherwise, download the `.jar` package from the Neo4j website and place it in the `/neo4j/plugins` folder.
 
-It is possible you have restricted by security cypher apoc use.
-Un-restrict it added following line to <neo4j folder>\conf\neo4j.conf file.
+It is possible you have APOC use restricted by security settings in Cypher. Un-restrict it by adding the following line to the `conf/neo4j.conf` file:
+
 [source]
 ----
 dbms.security.procedures.unrestricted=apoc.*
 ----
 
-If your Neo4j services start is not automatic, you can start them through \wikilink\neo4j_run.bat execution, assuming you have Neo4j installed on path C:\Neo4j.
+If your Neo4j services start is not automatic, you can start them through `wikilink/neo4j_run.bat` execution, assuming you have Neo4j installed on path `C:\Neo4j`.
 
-You will need to edit /wikilink/neo4j/wikilink_create_categories.ps1 & /wikilink/neo4j/wikilink_process_data.ps1 files to set your own Neo4j user/password.
+You will need to edit `wikilink/neo4j/wikilink_create_categories.ps1` and `wikilink/neo4j/wikilink_process_data.ps1` files to set your own Neo4j user/password.
 
-Then install the data-set run /wikilink/neo4j/wikilink_create_categories.bat . You can edit it to add commented categories creation with "//".
-Then prepare all the data running /wikilink/neo4j/wikilink_process_data.bat to load a single category in 1-5 minutes or /wikilink/neo4j/wikilink_process_data_all.bat to process all the dataset. 
+Then install the dataset running `wikilink/neo4j/wikilink_create_categories.bat`. You can edit it to add commented categories creation with `//`. Then prepare all the data running `wikilink/neo4j/wikilink_process_data.bat` to load a single category in 1–5 minutes or `wikilink/neo4j/wikilink_process_data_all.bat` to process all the dataset.
 
-For last, let's check python authentication with Neo4j & the contact form:
+For last, let’s check Python authentication with Neo4j and the contact form:
 
-On Neo4jRestClient folder on your python folder, open the client conf .py file and set up user & password.
-On wikilink\wikilink.py replace <neo4j_user> & <neo4j_password> with your Neo4j db authentication.
+On the Neo4jRestClient folder in your Python installation, open the client config `.py` file and set up user & password. On `wikilink/wikilink.py` replace the placeholders with your Neo4j DB authentication.
 
-[source]
+[source,python]
 ----
-password = "<neo4j_password>" 
-driver = neoGDB.driver('bolt://localhost',auth=basic_auth("<neo4j_user>", password))
+password = ""
+driver = neoGDB.driver("bolt://localhost", auth=basic_auth("", password))
 ----
 
-On wikilink\static\js you will need to modify wikilink-popoto.search.js file, adding Neo4j password on this line:
+In `wikilink/static/js` you will need to modify `wikilink-popoto.search.js` file, adding the Neo4j password on this line:
 
-[source]
+[source,javascript]
 ----
-popoto.rest.AUTHORIZATION = "Basic " + btoa(<Neo4j-password>);
+popoto.rest.AUTHORIZATION = "Basic " + btoa();
 ----
 
-For the contact form, on same wikilink/wikilink.py file replace below settings with your email settings. Default ones work with a Gmail account.
+For the contact form, in the same `wikilink/wikilink.py` file replace the settings below with your email settings. Default ones work with a Gmail account.
 
-[source]
+[source,python]
 ----
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -87,12 +91,12 @@ app.config['MAIL_USERNAME'] = 'YourUser@NameHere'
 app.config['MAIL_PASSWORD'] = 'yourMailPassword'
 ----
 
-And finally let's start up a Flask web server. You can do it cliking directly wikilink\wikilink_run.bat file, or executing command below
+And finally let’s start up a Flask web server. You can do it by clicking directly `wikilink/wikilink_run.bat` file, or executing the command below:
 
-[source]
+[source,bash]
 ----
 (wikilink)$ python wikilink.py
  * Running on http://127.0.0.1:8080/
 ----
 
-Navigate to http://localhost:8080 and you should see your WikiLink application
+Navigate to http://localhost:8080 and you should see your WikiLink application.
